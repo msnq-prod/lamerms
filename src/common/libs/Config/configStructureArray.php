@@ -69,21 +69,21 @@ $configStructureArray = [
     "form" => [
       "type" => "select",
       "default" => function () {
-        return "Sendgrid";
+        return "SMTP";
       },
       "name" => "Email provider",
       "group" => "Email",
-      "description" => "Which provider should AdamRMS use to send emails to users? This option is ignored if email sending is disabled.",
+      "description" => "Select how AdamRMS should send emails. The MVP build only supports SMTP delivery.",
       "required" => false,
       "maxlength" => 255,
       "minlength" => 4,
-      "options" => ["Sendgrid", "Mailgun", "Postmark", "SMTP"],
+      "options" => ["SMTP"],
       "verifyMatch" => function ($value, $options) {
         return ["valid" => in_array($value, $options), "value" => $value, "error" => in_array($value, $options) ? '' : "Invalid option selected"];
       }
     ],
-    "specialRequest" => true,
-    "default" => "Sendgrid",
+    "specialRequest" => false,
+    "default" => "SMTP",
     "envFallback" => "CONFIG_EMAILS_PROVIDER",
   ],
   "EMAILS_FROMEMAIL" => [
@@ -108,48 +108,6 @@ $configStructureArray = [
     "specialRequest" => true,
     "default" => false,
     "envFallback" => "CONFIG_EMAILS_FROM_EMAIL",
-  ],
-  "EMAILS_PROVIDERS_APIKEY" => [
-    "form" => [
-      "type" => "secret",
-      "default" => function () {
-        return "";
-      },
-      "name" => "Email Service API key",
-      "group" => "Email",
-      "description" => "If Sengrid, Mailgun or Postmark is selected above, the API key to use to send emails",
-      "required" => false,
-      "maxlength" => 255,
-      "minlength" => 0,
-      "options" => [],
-      "verifyMatch" => function ($value, $options) {
-        return ["valid" => true, "value" => $value, "error" => null];
-      }
-    ],
-    "specialRequest" => true,
-    "default" => false,
-    "envFallback" => "bCMS__SendGridAPIKEY",
-  ],
-  "EMAILS_PROVIDERS_MAILGUN_LOCATION" => [
-    "form" => [
-      "type" => "select",
-      "default" => function () {
-        return "";
-      },
-      "name" => "Mailgun Server Location",
-      "group" => "Email",
-      "description" => "If Mailgun is selected above, whether to use the US or EU Mailgun servers",
-      "required" => false,
-      "maxlength" => 255,
-      "minlength" => 0,
-      "options" => ["US", "EU"],
-      "verifyMatch" => function ($value, $options) {
-        return ["valid" => in_array($value, $options), "value" => $value, "error" => in_array($value, $options) ? '' : "Invalid option selected"];
-      }
-    ],
-    "specialRequest" => true,
-    "default" => false,
-    "envFallback" => false,
   ],
   "EMAILS_SMTP_SERVER" => [
     "form" => [
