@@ -1,21 +1,25 @@
 #!/bin/bash
-
-# This file is used by the docker container to build the database schema and seed the database with initial data
+set -euo pipefail
 
 cd /var/www/html
 
 # Validate expected environment variables
 echo "AdamRMS - Checking for Environment Variables"
-if [[ ! -v DB_HOSTNAME ]] || [[ ! -v DB_DATABASE ]] || [[ ! -v DB_USERNAME ]] || [[ ! -v DB_PASSWORD ]]; then
-    echo "AdamRMS - Expected Environment Variables not set"
-    exit 1
-fi
+: "${DB_HOSTNAME?AdamRMS - DB_HOSTNAME is not set}"
+: "${DB_DATABASE?AdamRMS - DB_DATABASE is not set}"
+: "${DB_USERNAME?AdamRMS - DB_USERNAME is not set}"
+: "${DB_PASSWORD?AdamRMS - DB_PASSWORD is not set}"
 
 # Database migration & seed
 echo "AdamRMS - Starting Migration Script"
-
 php vendor/bin/phinx migrate -e production
-php vendor/bin/phinx seed:run -e production
+
+if [[ "${SEED_ON_START:-true}" == 'true' ]]; then
+    echo "AdamRMS - Running seeds"
+    php vendor/bin/phinx seed:run -e production
+else
+    echo "AdamRMS - Skipping seeds (SEED_ON_START=${SEED_ON_START:-false})"
+fi
 
 if [[ -v DEV_MODE ]] && [[ "${DEV_MODE}" == 'true' ]]; then
     echo "AdamRMS - Running in DEV MODE"
