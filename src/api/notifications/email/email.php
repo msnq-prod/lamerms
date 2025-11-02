@@ -21,23 +21,17 @@ function sendEmail($user, $instanceID, $subject, $html = false, $template = fals
 
     $outputHTML = $TWIG->render('api/notifications/email/email_template.twig', ["SUBJECT" => $subject, "HTML"=> $bCMS->cleanString($html), "CONFIG" => $CONFIG, "DATA" => $emailData, "TEMPLATE" => $template, "INSTANCE" => $instance, "FOOTER" => $CONFIGCLASS->get('EMAILS_FOOTER')]); // Subject is escaped by twig, but the HTML is not.
 
-    switch ($CONFIGCLASS->get('EMAILS_PROVIDER')) {
-        case 'Sendgrid':
-            require_once __DIR__ . '/../../../common/libs/Email/SendgridHandler.php';
-            return SendgridEmailHandler::sendEmail($user, $subject, $outputHTML);
-        case 'Mailgun':
-            require_once __DIR__ . '/../../../common/libs/Email/MailgunHandler.php';
-            return MailgunEmailHandler::sendEmail($user, $subject, $outputHTML);
-        case 'Postmark':
-            require_once __DIR__ . '/../../../common/libs/Email/PostmarkHandler.php';
-            return PostmarkEmailHandler::sendEmail($user, $subject, $outputHTML);
-        case 'SMTP':
-            require_once __DIR__ . '/../../../common/libs/Email/SMTPHandler.php';
-            return SMTPEmailHandler::sendEmail($user, $subject, $outputHTML);
-        default:
-            trigger_error("Unknown email provider set", E_USER_ERROR);
-            return false;
+    $provider = $CONFIGCLASS->get('EMAILS_PROVIDER');
+    if ($provider !== 'SMTP') {
+        $providerName = is_string($provider) && $provider !== '' ? $provider : 'undefined';
+        trigger_error(
+            'Email provider "' . $providerName . '" is not supported in the MVP build; falling back to SMTP.',
+            E_USER_WARNING
+        );
     }
+
+    require_once __DIR__ . '/../../../common/libs/Email/SMTPHandler.php';
+    return SMTPEmailHandler::sendEmail($user, $subject, $outputHTML);
 }
 
 /** @OA\Get(
