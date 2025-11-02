@@ -1,33 +1,63 @@
-# AdamRMS
+# AdamRMS: Полное руководство по функциям
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/adam-rms/adam-rms)
-![GitHub repo size](https://img.shields.io/github/repo-size/adam-rms/adam-rms)
-![GitHub issues](https://img.shields.io/github/issues/adam-rms/adam-rms)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/adam-rms/adam-rms)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/adam-rms/adam-rms)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/adam-rms/adam-rms)
-![GitHub](https://img.shields.io/github/license/adam-rms/adam-rms)
-![GitHub stars](https://img.shields.io/github/stars/adam-rms/adam-rms)
-![GitHub contributors](https://img.shields.io/github/contributors/adam-rms/adam-rms)
-![GitHub](https://img.shields.io/github/release/adam-rms/adam-rms/all)
+AdamRMS — это веб-приложение для управления прокатным инвентарём, проектами и персоналом в театральных, аудиовизуальных и трансляционных компаниях. В этом README собраны подробные описания всех ключевых возможностей, чтобы вы могли быстро ориентироваться в системе и настроить её под задачи вашей команды.
 
-AdamRMS is an advanced Rental Management System for Theatre, AV & Broadcast, written in PHP with the Twig Templating engine, and deployed using a pre-built docker container.
+## Содержание
+- [Архитектура и ключевые компоненты](#архитектура-и-ключевые-компоненты)
+- [Панель управления](#панель-управления)
+- [Каталог и карточки активов](#каталог-и-карточки-активов)
+- [Управление проектами](#управление-проектами)
+- [Клиенты и отношения](#клиенты-и-отношения)
+- [Финансы и платежи](#финансы-и-платежи)
+- [Обслуживание и штрихкоды](#обслуживание-и-штрихкоды)
+- [Обучение персонала](#обучение-персонала)
+- [Пользователи и роли](#пользователи-и-роли)
+- [Настройки бизнеса и аналитика](#настройки-бизнеса-и-аналитика)
 
-It is available as a hosted solution or to be self-hosted as a docker container.
+Каждый раздел сопровождается отдельным документом в каталоге [`/discription`](discription), где вы найдёте сценарии использования, советы по настройке и рекомендации по интеграции.
 
-Check out who is using AdamRMS: [stats](https://telemetry.bithell.studio/projects/adam-rms).
+## Архитектура и ключевые компоненты
+Приложение построено на PHP с использованием Twig-шаблонов и распределено по тематическим модулям в каталоге [`src/`](src/). Такой подход отделяет бизнес-логику (PHP-файлы) от представления (Twig-шаблоны) и упрощает сопровождение.
 
-## Docker Images
+Основные разделы интерфейса представлены отдельными страницами и контроллерами:
+- `dashboard.twig` — стартовый экран с динамическими виджетами и календарём. 【F:src/dashboard.twig†L1-L28】
+- `assets.php` и `asset.php` — каталог и подробные карточки оборудования. 【F:src/assets.php†L1-L120】【F:src/asset.php†L1-L120】
+- `project/index.php` — управление проектами, статусами и доской выдачи оборудования. 【F:src/project/index.php†L1-L120】
+- `clients.php` и `ledger.php` — клиентская база и финансовый учёт. 【F:src/clients.php†L1-L79】【F:src/ledger.php†L1-L39】
+- `maintenance/index.php` и связанные шаблоны — обслуживание и работа с штрихкодами. 【F:src/maintenance/index.php†L1-L35】
+- `training/index.php` — модуль обучения и сертификаций. 【F:src/training/index.php†L1-L104】
+- `user.php` — профиль пользователя, назначения и уведомления. 【F:src/user.php†L1-L118】
+- `instances/settings.php` и `instances/stats.php` — настройки бизнеса и статистика. 【F:src/instances/settings.php†L1-L15】【F:src/instances/stats.php†L1-L11】
 
-A maintained docker image is provided - hosted on GitHub Packages as [adam-rms/adam-rms](https://github.com/orgs/adam-rms/packages?repo_name=adam-rms). Due to Docker Hub's pricing changes, the Docker Hub images are no longer maintained, but were identical to the GitHub Packages images which are still available to use.
+## Панель управления
+Панель управления объединяет виджеты статистики и календарь поставок/возвратов. Пользователь может добавлять и настраивать карточки с помощью набора виджетов, подключаемых через `WIDGETS.getAllDashboard()`. 【F:src/dashboard.twig†L5-L24】
 
-When self-hosting, please pay attention to the license terms of the software you are using. AdamRMS is licenced under AGPLv3, which means changes you make to the source code must be kept open source.
+Подробные сценарии настройки и кастомизации описаны в документе [`discription/dashboard.md`](discription/dashboard.md).
 
-## Getting Started with contributing to this repo
+## Каталог и карточки активов
+Каталог активов включает фильтры по инстансу, проектам, категориям, производителям, тегам и связанным группам, а также сортировку по цене, весу, стоимости и дате. 【F:src/assets.php†L6-L78】 Система поддерживает выборку по датам, скрытие архивированных или связанных позиций и управление страницами списка. 【F:src/assets.php†L18-L59】【F:src/assets.php†L82-L119】
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?ref=main&repo=217888995)
+Карточка актива раскрывает связанные экземпляры, файлы, задания обслуживания, групповые привязки, цепочки связанных предметов, штрихкоды и историю сканирований, а также хранит ссылки на место хранения. 【F:src/asset.php†L31-L180】 Подробные инструкции и советы вы найдёте в [`discription/assets.md`](discription/assets.md).
 
-Thanks for your interest in developing and improving AdamRMS!
-Contributions are very welcome - please see [the website](https://adam-rms.com/contributing) for a guide and for more info about this repo.
+## Управление проектами
+Проектный модуль объединяет аудит изменений, назначение клиентов и площадок, управление вакансиями команды и доску логистики оборудования с распределением по статусам. 【F:src/project/index.php†L1-L120】【F:src/project/index.php†L124-L205】 Настройки статусов, типов проектов, менеджеров и подзадач доступны прямо со страницы проекта. 【F:src/project/index.php†L207-L256】
 
-This repo has a configured devcontainer for use with GitHub Codespaces or VSCode. If you have a GitHub Codespaces subscription (paid), you can use this to get started with the project in the web, or if you have access to VSCode on your computer (free) you can get started by cloning the repo and opening it in VSCode, then [opening the project in a devcontainer](https://code.visualstudio.com/docs/devcontainers/tutorial).
+Дополнительные кейсы и рекомендации описаны в [`discription/projects.md`](discription/projects.md).
+
+## Клиенты и отношения
+Раздел клиентов поддерживает поиск по контактным данным и заметкам, фильтрацию архивных записей, постраничную выдачу и подсчёт финансовых итогов по связанным проектам с учётом статуса выдачи оборудования. 【F:src/clients.php†L7-L74】 Детальнее о работе с клиентской базой читайте в [`discription/clients.md`](discription/clients.md).
+
+## Финансы и платежи
+Финансовый журнал фиксирует платежи по проектам, связывает их с клиентами и хранит вложенные документы. Доступно постраничное отображение, сортировка по дате и поиск по сумме или номеру. 【F:src/ledger.php†L6-L33】 Описание рабочих процессов и интеграций см. в [`discription/finance.md`](discription/finance.md).
+
+## Обслуживание и штрихкоды
+Модуль обслуживания выводит задания с учётом статусов, исполнителей, сроков и приоритетов, а также позволяет переключаться между текущими и завершёнными задачами. 【F:src/maintenance/index.php†L7-L32】 Карточки активов отображают связанные заявки, штрихкоды, историю последних сканирований и привязку к местоположениям для отслеживания движения. 【F:src/asset.php†L86-L170】 Подробнее — в [`discription/maintenance.md`](discription/maintenance.md).
+
+## Обучение персонала
+Раздел обучения управляет модулями, шагами и сертификациями, учитывает видимость по должностям и отслеживает прогресс каждого пользователя, включая даты начала и обновления. 【F:src/training/index.php†L9-L101】 Отдельный документ [`discription/training.md`](discription/training.md) раскрывает сценарии внедрения и контроля знаний.
+
+## Пользователи и роли
+Профили пользователей содержат параметры входа (включая внешние провайдеры), автоматическую генерацию календарных ссылок, текущие назначения на проекты, управленческие роли, список должностей и индивидуальные настройки уведомлений. 【F:src/user.php†L1-L118】 Детальный путеводитель приведён в [`discription/users.md`](discription/users.md).
+
+## Настройки бизнеса и аналитика
+Инстанс администрирования предоставляет доступ к базовым настройкам, конфигурации статусов выдачи, а также к панели бизнес-статистики с виджетами. 【F:src/instances/settings.php†L1-L15】【F:src/instances/stats.php†L5-L10】 Узнать обо всех параметрах можно из [`discription/instance-management.md`](discription/instance-management.md).
