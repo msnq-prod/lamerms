@@ -12,6 +12,8 @@ echo "AdamRMS - Checking for Environment Variables"
 
 # Database migration & seed
 echo "AdamRMS - Starting Migration Script"
+# Only the trimmed migration set in db/migrations is executed by default.
+# Legacy migrations are archived under legacy/db/migrations for reference.
 php vendor/bin/phinx migrate -e production
 
 if [[ "${SEED_ON_START:-true}" == 'true' ]]; then

@@ -5,7 +5,6 @@ return
             'migrations' => __DIR__ . '/db/migrations',
             'seeds' => __DIR__ . '/db/seeds'
         ],
-        'schema_file' => __DIR__ . '/db/schema.php',
         'foreign_keys' => true,
         'environments' => [
             'migration_table' => 'phinxlog',
