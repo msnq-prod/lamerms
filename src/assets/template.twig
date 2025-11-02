@@ -379,393 +379,118 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 						</div>
 
 						<!-- Sidebar Menu -->
-						<nav class="mt-2">
-							<ul
-								class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-								<!-- Add icons to the links using the .nav-icon class
-																								                         with font-awesome or any other icon font library -->
+						
+                                                <nav class="mt-2">
+                                                        <ul
+                                                                class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                                                                {% if USERDATA.instances|length > 0 %}
+                                                                        <li class="nav-item">
+                                                                                <a href="{{ CONFIG.ROOTURL }}/" class="nav-link">
+                                                                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                                                                        <p>Dashboard</p>
+                                                                                </a>
+                                                                        </li>
 
-								{% if USERDATA.instances|length > 0 %}
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL }}/" class="nav-link">
-											<i class="nav-icon fas fa-tachometer-alt"></i>
-											<p>
-												Dashboard
-											</p>
-										</a>
-									</li>
-								{% endif %}
-{% if CONFIG.LINKS_SUPPORTURL|length > 0 %}
+                                                                        <li class="nav-header">WAREHOUSE</li>
+                                                                        <li class="nav-item">
+                                                                                <a href="{{ CONFIG.ROOTURL }}/assets.php" class="nav-link">
+                                                                                        <i class="nav-icon fas fa-warehouse"></i>
+                                                                                        <p>Assets</p>
+                                                                                </a>
+                                                                        </li>
+                                                                        {% if "ASSETS:CREATE"|instancePermissions %}
+                                                                                <li class="nav-item">
+                                                                                        <a href="{{ CONFIG.ROOTURL }}/newAsset.php" class="nav-link">
+                                                                                                <i class="nav-icon fas fa-plus"></i>
+                                                                                                <p>New Asset</p>
+                                                                                        </a>
+                                                                                </li>
+                                                                        {% endif %}
 
-								<li class="nav-item">
-									<a href="{{ CONFIG.LINKS_SUPPORTURL }}" target="_blank" class="nav-link">
+                                                                        <li class="nav-header">ORDERS</li>
+                                                                        {% if "PROJECTS:VIEW"|instancePermissions %}
+                                                                                <li class="nav-item has-treeview">
+                                                                                        <a href="#" class="nav-link">
+                                                                                                <i class="nav-icon fas fa-clipboard-list"></i>
+                                                                                                <p>
+                                                                                                        Active Orders
+                                                                                                        <i class="fas fa-angle-left right"></i>
+                                                                                                </p>
+                                                                                        </a>
+                                                                                        <ul class="nav nav-treeview">
+                                                                                                {% for project in projects %}
+                                                                                                        {% if project.subProjects %}
+                                                                                                                <li class="nav-item has-treeview">
+                                                                                                                        <a href="#" class="nav-link">
+                                                                                                                                <i class="nav-icon fas fa-clipboard-list"></i>
+                                                                                                                                <p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(24, '...') }}
+                                                                                                                                        <i class="fas fa-angle-left right"></i>
+                                                                                                                                </p>
+                                                                                                                        </a>
+                                                                                                                        <ul class="nav nav-treeview">
+                                                                                                                                <li class="nav-item">
+                                                                                                                                        <a href="{{ CONFIG.ROOTURL }}/project/?id={{ project.projects_id }}" class="nav-link">
+                                                                                                                                                <i class="nav-icon fas fa-clipboard-list"></i>
+                                                                                                                                                <p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(24, '...') }}</p>
+                                                                                                                                        </a>
+                                                                                                                                </li>
+                                                                                                                                {% for subProject in project.subProjects %}
+                                                                                                                                        <li class="nav-item">
+                                                                                                                                                <a href="{{ CONFIG.ROOTURL }}/project/?id={{ subProject.projects_id }}" class="nav-link">
+                                                                                                                                                        <i class="nav-icon fas fa-caret-right"></i>
+                                                                                                                                                        <p title="{{ subProject.projects_name }}">{{ subProject.projects_name|u.truncate(24, '...') }}</p>
+                                                                                                                                                </a>
+                                                                                                                                        </li>
+                                                                                                                                {% endfor %}
+                                                                                                                        </ul>
+                                                                                                                </li>
+                                                                                                        {% else %}
+                                                                                                                <li class="nav-item">
+                                                                                                                        <a href="{{ CONFIG.ROOTURL }}/project/?id={{ project.projects_id }}" class="nav-link">
+                                                                                                                                <i class="nav-icon fas fa-clipboard-list"></i>
+                                                                                                                                <p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(24, '...') }}</p>
+                                                                                                                        </a>
+                                                                                                                </li>
+                                                                                                        {% endif %}
+                                                                                                {% endfor %}
+                                                                                        </ul>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                        <a href="{{ CONFIG.ROOTURL }}/project/list.php" class="nav-link">
+                                                                                                <i class="nav-icon fas fa-list-ol"></i>
+                                                                                                <p>All Orders</p>
+                                                                                        </a>
+                                                                                </li>
+                                                                                {% if "PROJECTS:CREATE"|instancePermissions %}
+                                                                                        <li class="nav-item">
+                                                                                                <a href="{{ CONFIG.ROOTURL }}/project/new.php" class="nav-link">
+                                                                                                        <i class="nav-icon fas fa-plus"></i>
+                                                                                                        <p>New Order</p>
+                                                                                                </a>
+                                                                                        </li>
+                                                                                {% endif %}
+                                                                        {% endif %}
 
-										<i class="nav-icon fas fa-question-circle"></i>
-										<p>
-											Support
-										</p>
-									</a>
-								</li>
-{% endif %}
-
-								{% if "TRAINING:VIEW"|instancePermissions %}
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL}}/training/" class="nav-link">
-											<i class="nav-icon fas fa-graduation-cap"></i>
-											<p>Training</p>
-										</a>
-									</li>
-								{% endif %}
-								{% if "PROJECTS:PROJECT_CREW:VIEW:VIEW_AND_APPLY_FOR_CREW_ROLES"|instancePermissions %}
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL}}/project/crew/vacancies.php" class="nav-link">
-											<i class="nav-icon fas fa-notes-medical"></i>
-											<p>Crew Vacancies</p>
-										</a>
-									</li>
-								{% endif %}
-								{% if USERDATA.instance.instances_billingUser == USERDATA.users_userid %}
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL}}/instances/billing.php" class="nav-link">
-											<i class="nav-icon fas fa-money-check"></i>
-											<p>Billing</p>
-										</a>
-									</li>
-								{% endif %}
-								{% if USERDATA.instances|length > 0 %}
-									<li class="nav-item has-treeview">
-										<a href="#" class="nav-link">
-											<i class="nav-icon fas fa-city"></i>
-											<p>
-												Business
-												<i class="fas fa-angle-left right"></i>
-											</p>
-										</a>
-										<ul class="nav nav-treeview">
-											{% if "BUSINESS:BUSINESS_STATS:VIEW"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/instances/stats.php" class="nav-link">
-														<i class="nav-icon fas fa-chart-bar"></i>
-														<p>
-															Stats
-														</p>
-													</a>
-												</li>
-											{% endif %}
-											<li class="nav-item">
-												<a href="{{ CONFIG.ROOTURL }}/instances/calendar.php" class="nav-link">
-													<i class="nav-icon far fa-calendar-alt"></i>
-													<p>
-														Calendar
-													</p>
-												</a>
-											</li>
-
-											{% if "CLIENTS:VIEW"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/clients.php" class="nav-link">
-														<i class="nav-icon fas fa-briefcase"></i>
-														<p>
-															Clients
-														</p>
-													</a>
-												</li>
-											{% endif %}
-											{% if "FINANCE:PAYMENTS_LEDGER:VIEW"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/ledger.php" class="nav-link">
-														<i class="nav-icon fas fa-coins"></i>
-														<p>
-															Payments
-														</p>
-													</a>
-												</li>
-											{% endif %}
-
-											{% if "LOCATIONS:VIEW"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/location/" class="nav-link">
-														<i class="fa fa-map-marked-alt nav-icon"></i>
-														<p>
-															Locations
-														</p>
-													</a>
-												</li>
-											{% endif %}
-											<li class="nav-item">
-												<a href="{{ CONFIG.ROOTURL }}/manufacturers.php" class="nav-link">
-													<i class="nav-icon fas fa-industry"></i>
-													<p>
-														Manufacturers
-													</p>
-												</a>
-											</li>
-											{% if "CMS:CMS_PAGES:CREATE"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/cms/list.php" class="nav-link">
-														<i class="far fa-newspaper nav-icon"></i>
-														<p>
-															CMS Pages
-														</p>
-													</a>
-												</li>
-											{% endif %}
-											{% if "BUSINESS:SETTINGS:EDIT:TRUSTED_DOMAINS"|instancePermissions or "BUSINESS:USER_SIGNUP_CODES:VIEW"|instancePermissions or "BUSINESS:ROLES_AND_PERMISSIONS:VIEW"|instancePermissions or "BUSINESS:USERS:VIEW:LIST"|instancePermissions or "BUSINESS:BUSINESS_SETTINGS:VIEW"|instancePermissions or "PROJECTS:PROJECT_TYPES:VIEW"|instancePermissions or "PROJECTS:PROJECT_STATUSES:VIEW"|instancePermissions or "ASSETS:ASSET_CATEGORIES:VIEW"|instancePermissions %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/instances/navigation.php" class="nav-link">
-														<i class="nav-icon fas fa-cog"></i>
-														<p>
-															Users &amp; Settings
-														</p>
-													</a>
-												</li>
-											{% endif %}
-										</ul>
-									</li>
-
-									{% if NAVIGATIONCMSPages %}
-										<li class="nav-header">PAGES</li>
-										{% for page in NAVIGATIONCMSPages %}
-											{% if page.SUBPAGES %}
-												<li class="nav-item has-treeview">
-													<a href="#" class="nav-link">
-														<i class="nav-icon {{ page.cmsPages_fontAwesome }}"></i>
-														<p>
-															{{ page.cmsPages_name }}
-															<i class="fas fa-angle-left right"></i>
-														</p>
-													</a>
-													<ul class="nav nav-treeview">
-														<li class="nav-item">
-															<a href="{{ CONFIG.ROOTURL }}/cms/?p={{ page.cmsPages_id }}" class="nav-link">
-																<i class="nav-icon {{ page.cmsPages_fontAwesome }}"></i>
-																<p>{{ page.cmsPages_name }}</p>
-															</a>
-														</li>
-														{% for page in page.SUBPAGES %}
-															<li class="nav-item">
-																<a href="{{ CONFIG.ROOTURL }}/cms/?p={{ page.cmsPages_id }}" class="nav-link">
-																	<i class="nav-icon {{ page.cmsPages_fontAwesome }}"></i>
-																	<p>{{ page.cmsPages_name }}</p>
-																</a>
-															</li>
-														{% endfor %}
-													</ul>
-												</li>
-											{% else %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/cms/?p={{ page.cmsPages_id }}" class="nav-link">
-														<i class="nav-icon {{ page.cmsPages_fontAwesome }}"></i>
-														<p>{{ page.cmsPages_name }}</p>
-													</a>
-												</li>
-											{% endif %}
-										{% endfor %}
-									{% endif %}
-									<li class="nav-header">ASSETS</li>
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL}}/assets.php" class="nav-link">
-											<i class="nav-icon fas fa-warehouse"></i>
-											<p>Assets</p>
-										</a>
-									</li>
-									{% if "ASSETS:CREATE"|instancePermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL}}/newAsset.php" class="nav-link">
-												<i class="fas fa-plus nav-icon"></i>
-												<p>New Asset</p>
-											</a>
-										</li>
-									{% endif %}
-									<li class="nav-item">
-										<a href="{{ CONFIG.ROOTURL }}/instances/groups.php" class="nav-link">
-											<i class="nav-icon fas fa-layer-group"></i>
-											<p>
-												Groups
-											</p>
-										</a>
-									</li>
-									{% if "MAINTENANCE_JOBS:VIEW"|instancePermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/maintenance/" class="nav-link">
-												<i class="nav-icon fas fa-paint-roller"></i>
-												<p>
-													Maintenance
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "ASSETS:ASSET_BARCODES:VIEW"|instancePermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL}}/maintenance/barcode.php" class="nav-link">
-												<i class="fas fa-barcode nav-icon"></i>
-												<p>Barcode Scanner</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "PROJECTS:VIEW"|instancePermissions %}
-										<li class="nav-header">PROJECTS</li>
-										{% set archive = false %}
-										{% for project in projects %}
-											{% if project.subProjects %}
-												<li class="nav-item has-treeview">
-													<a href="#" class="nav-link">
-														<i class="nav-icon
-																														                                        {% if project.projectsStatuses_fontAwesome %}
-																														                                            {{ project.projectsStatuses_fontAwesome }}
-																														                                        {% elseif project.projects_manager == USERDATA.users_userid %}
-																														                                        fas fa-star
-																														                                        {% else %}
-																														                                        far fa-circle
-																														                                        {% endif %}" style="color: {{ project.projectsStatuses_backgroundColour }}" title="{{ project.projectsStatuses_name }}"></i>
-														<p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(19, '...') }}</p>
-														<i class="fas fa-angle-left right"></i>
-													</a>
-													<ul class="nav nav-treeview">
-														<li class="nav-item">
-															<a href="{{ CONFIG.ROOTURL }}/project/?id={{ project.projects_id }}" class="nav-link">
-																<i class="nav-icon
-																																		                                                {% if project.projects_manager == USERDATA.users_userid %}
-																																		                                                fas fa-sun
-																																		                                                {% else %}
-																																		                                                far fa-sun
-																																		                                                {% endif %}" style="color: {{ project.projectsStatuses_backgroundColour }}" title="{{ project.projectsStatuses_name }}"></i>
-																<p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(19, '...') }}</p>
-															</a>
-														</li>
-														{% for subProject in project.subProjects %}
-															<li class="nav-item">
-																<a href="{{ CONFIG.ROOTURL }}/project/?id={{ subProject.projects_id }}" class="nav-link">
-																	<i class="nav-icon
-																																				                                        {% if subProject.projectsStatuses_fontAwesome %}
-																																				                                            {{ subProject.projectsStatuses_fontAwesome }}
-																																				                                        {% elseif subProject.projects_manager == USERDATA.users_userid %}
-																																				                                        fas fa-star
-																																				                                        {% else %}
-																																				                                        far fa-circle
-																																				                                        {% endif %}" style="color: {{ subProject.projectsStatuses_backgroundColour }}" title="{{ subProject.projectsStatuses_name }}"></i>
-																	<p title="{{ subProject.projects_name }}">&#8627;
-																		{{ subProject.projects_name|u.truncate(19, '...') }}</p>
-																</a>
-															</li>
-														{% endfor %}
-													</ul>
-												</li>
-											{% else %}
-												<li class="nav-item">
-													<a href="{{ CONFIG.ROOTURL }}/project/?id={{ project.projects_id }}" class="nav-link">
-														<i class="nav-icon
-																														                                        {% if project.projectsStatuses_fontAwesome %}
-																														                                            {{ project.projectsStatuses_fontAwesome }}
-																														                                        {% elseif project.projects_manager == USERDATA.users_userid %}
-																														                                        fas fa-star
-																														                                        {% else %}
-																														                                        far fa-circle
-																														                                        {% endif %}" style="color: {{ project.projectsStatuses_backgroundColour }}" title="{{ project.projectsStatuses_name }}"></i>
-														<p title="{{ project.projects_name }}">{{ project.projects_name|u.truncate(24, '...') }}</p>
-													</a>
-												</li>
-											{% endif %}
-										{% endfor %}
-										<li class="nav-item">
-											<a href="{{CONFIG.ROOTURL}}/project/list.php" class="nav-link">
-												<i class="nav-icon fas fa-list-ol"></i>
-												<p>List</p>
-											</a>
-										</li>
-										{% if "PROJECTS:CREATE"|instancePermissions %}
-											<li class="nav-item">
-												<a href="{{ CONFIG.ROOTURL }}/project/new.php" class="nav-link">
-													<i class="nav-icon fas fa-plus"></i>
-													<p>New Project</p>
-												</a>
-											</li>
-										{% endif %}
-									{% endif %}
-									{% if "USERS:VIEW"|serverPermissions or "PERMISSIONS:VIEW"|serverPermissions or "VIEW-AUDIT-LOG"|serverPermissions or "VIEW-ANALYTICS"|serverPermissions or "INSTANCES:IMPORT:ASSETS"|serverPermissions %}
-										<li class="nav-header">SERVER ADMIN</li>
-									{% endif %}
-									{% if "CONFIG:SET"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/config.php" class="nav-link">
-												<i class="nav-icon fas fa-cog"></i>
-												<p>
-													Configuration
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "USERS:VIEW"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/users.php" class="nav-link">
-												<i class="nav-icon fas fa-users"></i>
-												<p>
-													Users
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "PERMISSIONS:VIEW"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/permissions.php" class="nav-link">
-												<i class="nav-icon fas fa-unlock-alt"></i>
-												<p>
-													Permissions
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "INSTANCES:VIEW"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/instances.php" class="nav-link">
-												<i class="nav-icon fas fa-city"></i>
-												<p>
-													Businesses
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "VIEW-AUDIT-LOG"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/auditLog.php" class="nav-link">
-												<i class="nav-icon fas fa-gavel"></i>
-												<p>
-													Audit Log
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "VIEW-ANALYTICS"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/analytics/" class="nav-link">
-												<i class="nav-icon far fa-chart-bar"></i>
-												<p>
-													Analytics
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-									{% if "INSTANCES:IMPORT:ASSETS"|serverPermissions %}
-										<li class="nav-item">
-											<a href="{{ CONFIG.ROOTURL }}/server/import.php" class="nav-link">
-												<i class="nav-icon fas fa-upload"></i>
-												<p>
-													Import
-													<span class="right badge badge-danger">Server-Wide</span>
-												</p>
-											</a>
-										</li>
-									{% endif %}
-
-								{% endif %}
-							</ul>
-						</nav>
+                                                                        <li class="nav-header">REPAIR</li>
+                                                                        {% if "MAINTENANCE_JOBS:VIEW"|instancePermissions %}
+                                                                                <li class="nav-item">
+                                                                                        <a href="{{ CONFIG.ROOTURL }}/maintenance/" class="nav-link">
+                                                                                                <i class="nav-icon fas fa-tools"></i>
+                                                                                                <p>Jobs</p>
+                                                                                        </a>
+                                                                                </li>
+                                                                        {% endif %}
+                                                                        {% if "ASSETS:ASSET_BARCODES:VIEW"|instancePermissions %}
+                                                                                <li class="nav-item">
+                                                                                        <a href="{{ CONFIG.ROOTURL }}/maintenance/barcode.php" class="nav-link">
+                                                                                                <i class="nav-icon fas fa-barcode"></i>
+                                                                                                <p>Barcode Scanner</p>
+                                                                                        </a>
+                                                                                </li>
+                                                                        {% endif %}
+                                                                {% endif %}
+                                                        </ul>
+                                                </nav>
 					</div>
 				{% endif %}
 			</aside>
