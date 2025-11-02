@@ -23,6 +23,7 @@ class bID
     public $data;
     public $debug = '';
     private $serverPermissions;
+    private $isAdmin = false;
     private function getToken() {
         global $CONFIG;
         /**
@@ -129,6 +130,11 @@ class bID
         }
         $this->serverPermissions = array_unique($this->serverPermissions);
 
+        $this->refreshIsAdminFlag();
+        if ($this->login) {
+            $this->data['isAdmin'] = $this->isAdmin();
+        }
+
         // Get the users instance permissions
         $DBLIB->orderBy("instances.instances_id", "ASC");
         $DBLIB->join("instancePositions", "userInstances.instancePositions_id=instancePositions.instancePositions_id", "LEFT");
@@ -201,15 +207,41 @@ class bID
 
     public function serverPermissionCheck($permissionKey) {
         if (!$this->login) return false; //Not logged in
-        if (in_array($permissionKey, $this->serverPermissions)) return true;
-        else return false;
+        return $this->isAdmin();
     }
 
     public function instancePermissionCheck($permissionKey) {
         if (!$this->login) return false; //Not logged in
-        if (!$this->data['instance'] or $this->data['instance']['permissions'] == null) return false;
-        if (in_array($permissionKey, $this->data['instance']['permissions'])) return true;
-        else return false;
+        return $this->isAdmin();
+    }
+
+    public function isAdmin() {
+        return $this->isAdmin;
+    }
+
+    private function refreshIsAdminFlag() {
+        $this->isAdmin = false;
+
+        if (!$this->login) {
+            return;
+        }
+
+        if (isset($this->data['users_isAdmin'])) {
+            $this->isAdmin = (bool)$this->data['users_isAdmin'];
+            return;
+        }
+
+        if (isset($this->data['users_role'])) {
+            $role = strtolower((string) $this->data['users_role']);
+            if (in_array($role, ['admin', 'administrator'], true)) {
+                $this->isAdmin = true;
+                return;
+            }
+        }
+
+        if (in_array('INSTANCES:FULL_PERMISSIONS_IN_INSTANCE', $this->serverPermissions ?? [], true)) {
+            $this->isAdmin = true;
+        }
     }
     public function setInstance($instanceId) {
         global $DBLIB;
