@@ -26,8 +26,7 @@ LABEL org.opencontainers.image.vendor="Bithell Studios Ltd."
 LABEL org.opencontainers.image.description="AdamRMS MVP image with PHP Apache2 runtime."
 LABEL org.opencontainers.image.licenses=AGPL-3.0
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/src \
-    SEED_ON_START=true
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/src
 
 RUN apt-get update && apt-get install -y \
     libicu-dev \
@@ -52,6 +51,7 @@ COPY ./src /var/www/html/src
 COPY ./db /var/www/html/db
 COPY ./phinx.php /var/www/html
 COPY ./migrate.sh /var/www/html
+COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/zz-adamrms.conf
 COPY ./.env.example /var/www/html/.env.example
 
 RUN chmod +x /var/www/html/migrate.sh
