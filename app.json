@@ -1,8 +1,32 @@
 {
-  "name": "AdamRMS",
-  "description": "AdamRMS is an advanced Rental Management System for Theatre, AV & Broadcast, written in Typescript. It is available as a hosted solution or to be self-hosted.",
+  "name": "AdamRMS MVP",
+  "description": "Minimal deployment of AdamRMS focused on warehouse, orders and maintenance.",
   "website": "https://adam-rms.com",
   "repository": "https://github.com/adam-rms/adam-rms",
   "env": {
+    "DB_HOSTNAME": {
+      "description": "Database hostname",
+      "value": "db"
+    },
+    "DB_PORT": {
+      "description": "Database port",
+      "value": "3306"
+    },
+    "DB_DATABASE": {
+      "description": "Database name",
+      "value": "adam_rms"
+    },
+    "DB_USERNAME": {
+      "description": "Database user",
+      "value": "adam_rms"
+    },
+    "DB_PASSWORD": {
+      "description": "Database password",
+      "value": "secret"
+    },
+    "SEED_ON_START": {
+      "description": "Run database seeds on container start",
+      "value": "true"
+    }
   }
 }
