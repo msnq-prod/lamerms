@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -142,7 +142,7 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
                         var errorMessage = "";
                         }
                         bootbox.alert(
-                            "{{ CONFIG.PROJECT_NAME }} encountered an error.{% if CONFIG.LINKS_SUPPORTURL|length > 0 %} <a href='{{ CONFIG.LINKS_SUPPORTURL }}' target='_blank'>Contact Support</a>{% endif %}<br/><br/>" +
+                            "В {{ CONFIG.PROJECT_NAME }} произошла ошибка.{% if CONFIG.LINKS_SUPPORTURL|length > 0 %} <a href='{{ CONFIG.LINKS_SUPPORTURL }}' target='_blank'>Связаться с поддержкой</a>{% endif %}<br/><br/>" +
                             errorMessage,
                         function () {
                             if (reloadIfError) {
@@ -157,7 +157,7 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
                     console.log(jqXHR, textStatus, errorThrown);
                     console.log("Connection Error");
                     bootbox.alert(
-                        "Sorry we couldn't connect to the internet - please check your connection",
+                        "Не удалось подключиться к сети — проверьте подключение к интернету",
                         function () {
                         if (reloadIfError) {
                             location.reload();
@@ -277,18 +277,18 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 					{% endif %}
 					{% if USERDATA.viewSiteAs != false %}
 						<li class="nav-item">
-							<a href="{{ CONFIG.ROOTURL }}/api/account/viewSiteAs_terminate.php" class="nav-link">Back to Admin</a>
+                        <a href="{{ CONFIG.ROOTURL }}/api/account/viewSiteAs_terminate.php" class="nav-link">Вернуться к администратору</a>
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a href="{{ CONFIG.ROOTURL }}/login/?logout" class="nav-link">Logout</a>
+                        <a href="{{ CONFIG.ROOTURL }}/login/?logout" class="nav-link">Выйти</a>
 						</li>
 					{% endif %}
 				</ul>
 				{% if USERDATA.instances|length > 0 and pageConfig.NOMENU != true %}
 					<form class="form-inline ml-3 d-none d-sm-block" action="{{CONFIG.ROOTURL}}/search.php" method="GET">
 						<div class="input-group input-group-sm">
-							<input class="form-control form-control-navbar" name="term" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control form-control-navbar" name="term" type="search" placeholder="Поиск" aria-label="Поиск">
 							<div class="input-group-append">
 								<button class="btn btn-navbar" type="submit">
 									<i class="fas fa-search"></i>
@@ -310,14 +310,14 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 								</a>
 								<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 									{% if USERDATA.instances|length > 1 %}
-										<span class="dropdown-header">Your Businesses</span>
+                                <span class="dropdown-header">Ваши организации</span>
 										{% for instance in USERDATA.instances %}
 											<a href="{{ CONFIG.ROOTURL }}?i={{instance.instances_id}}" class="dropdown-item changeInstanceActionButton" data-newinstance="{{instance.instances_id}}">
 												{{instance.instances_name}}
 												<p class="text-sm text-muted">{{ instance.userInstances_label }}</p>
 												{% if USERDATA.instance.instances_id == instance.instances_id %}
 													<div class="d-block d-sm-none">
-														<span class="float-right text-muted text-sm">Selected</span>
+                                        <span class="float-right text-muted text-sm">Выбрано</span>
 													</div>
 												{% endif %}
 											</a>
@@ -327,24 +327,20 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 									{% for instance in instancesAvailableToJoinAsTrustedDomains %}
 										<a href="{{ CONFIG.ROOTURL }}/instances/join.php" class="dropdown-item">
 											{{instance.instances_name}}
-											<p class="text-sm text-muted">Available to join</p>
+                                    <p class="text-sm text-muted">Доступно для присоединения</p>
 										</a>
 										<div class="dropdown-divider"></div>
 									{% endfor %}
-									<a href="{{CONFIG.ROOTURL}}/instances/join.php" class="dropdown-item dropdown-footer">Join business</a>
-									{% if CONFIG["NEW_INSTANCE_ENABLED"] == "Enabled" or "INSTANCES:CREATE"|serverPermissions %}
-										<a href="{{CONFIG.ROOTURL}}/instances/new.php" class="dropdown-item dropdown-footer">Create new business</a>
-									{% else %}
+                                <a href="{{CONFIG.ROOTURL}}/instances/join.php" class="dropdown-item dropdown-footer">Присоединиться к организации</a>
 										<a href="#" class="dropdown-item dropdown-footer">
-											<i>Contact support to add new businesses</i>
+	                                        <i>Свяжитесь с поддержкой, чтобы добавить новые организации</i>
 										</a>
-									{% endif %}
 								</div>
 							</li>
 
 						{% endif %}
 						<li class="nav-item">
-							<a href="#" class="nav-link" id="toggle-theme" title="Toggle Theme Color">
+                        <a href="#" class="nav-link" id="toggle-theme" title="Переключить тему">
 								<i class="fas {% if USERDATA.users_dark_mode %}fa-sun{%else%}fa-moon{% endif %}" id="theme-icon"></i>
 							</a>
 						</li>
@@ -387,33 +383,33 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
                                                                         <li class="nav-item">
                                                                                 <a href="{{ CONFIG.ROOTURL }}/" class="nav-link">
                                                                                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                                                                                        <p>Dashboard</p>
+                                                                                        <p>Главная</p>
                                                                                 </a>
                                                                         </li>
 
-                                                                        <li class="nav-header">WAREHOUSE</li>
+                                                                        <li class="nav-header">СКЛАД</li>
                                                                         <li class="nav-item">
                                                                                 <a href="{{ CONFIG.ROOTURL }}/assets.php" class="nav-link">
                                                                                         <i class="nav-icon fas fa-warehouse"></i>
-                                                                                        <p>Assets</p>
+                                                                                        <p>Оборудование</p>
                                                                                 </a>
                                                                         </li>
                                                                         {% if "ASSETS:CREATE"|instancePermissions %}
                                                                                 <li class="nav-item">
                                                                                         <a href="{{ CONFIG.ROOTURL }}/newAsset.php" class="nav-link">
                                                                                                 <i class="nav-icon fas fa-plus"></i>
-                                                                                                <p>New Asset</p>
+                                                                                                <p>Добавить оборудование</p>
                                                                                         </a>
                                                                                 </li>
                                                                         {% endif %}
 
-                                                                        <li class="nav-header">ORDERS</li>
+                                                                        <li class="nav-header">ЗАКАЗЫ</li>
                                                                         {% if "PROJECTS:VIEW"|instancePermissions %}
                                                                                 <li class="nav-item has-treeview">
                                                                                         <a href="#" class="nav-link">
                                                                                                 <i class="nav-icon fas fa-clipboard-list"></i>
                                                                                                 <p>
-                                                                                                        Active Orders
+                                                                                                        Активные заказы
                                                                                                         <i class="fas fa-angle-left right"></i>
                                                                                                 </p>
                                                                                         </a>
@@ -458,25 +454,25 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
                                                                                 <li class="nav-item">
                                                                                         <a href="{{ CONFIG.ROOTURL }}/project/list.php" class="nav-link">
                                                                                                 <i class="nav-icon fas fa-list-ol"></i>
-                                                                                                <p>All Orders</p>
+                                                                                                <p>Все заказы</p>
                                                                                         </a>
                                                                                 </li>
                                                                                 {% if "PROJECTS:CREATE"|instancePermissions %}
                                                                                         <li class="nav-item">
                                                                                                 <a href="{{ CONFIG.ROOTURL }}/project/new.php" class="nav-link">
                                                                                                         <i class="nav-icon fas fa-plus"></i>
-                                                                                                        <p>New Order</p>
+                                                                                                        <p>Новый заказ</p>
                                                                                                 </a>
                                                                                         </li>
                                                                                 {% endif %}
                                                                         {% endif %}
 
-                                                                        <li class="nav-header">REPAIR</li>
+                                                                        <li class="nav-header">ОБСЛУЖИВАНИЕ</li>
                                                                         {% if "MAINTENANCE_JOBS:VIEW"|instancePermissions %}
                                                                                 <li class="nav-item">
                                                                                         <a href="{{ CONFIG.ROOTURL }}/maintenance/" class="nav-link">
                                                                                                 <i class="nav-icon fas fa-tools"></i>
-                                                                                                <p>Jobs</p>
+                                                                                                <p>Задачи</p>
                                                                                         </a>
                                                                                 </li>
                                                                         {% endif %}
@@ -484,7 +480,7 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
                                                                                 <li class="nav-item">
                                                                                         <a href="{{ CONFIG.ROOTURL }}/maintenance/barcode.php" class="nav-link">
                                                                                                 <i class="nav-icon fas fa-barcode"></i>
-                                                                                                <p>Barcode Scanner</p>
+                                                                                                <p>Сканер штрихкодов</p>
                                                                                         </a>
                                                                                 </li>
                                                                         {% endif %}
@@ -511,7 +507,7 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 								<div class="col-sm-6">
 									<ol class="breadcrumb float-sm-right">
 										<li class="breadcrumb-item">
-											<a href="{{CONFIG.ROOTURL}}">Home</a>
+                                            <a href="{{CONFIG.ROOTURL}}">Главная</a>
 										</li>
 										<li class="breadcrumb-item active">{{ pageConfig.TITLE }}</li>
 									</ol>
@@ -523,10 +519,10 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 							<div class="alert alert-warning alert-dismissible" style="border: 0px; margin-bottom: 0px;">
 								<h4>
 									<i class="fa fa-terminal"></i>
-									{{ CONFIG.PROJECT_NAME }} is running in development mode, and should only be used for testing purposes
+                            {{ CONFIG.PROJECT_NAME }} запущен в режиме разработки и предназначен только для тестирования
 								</h4>
-								<a type="button" href="/" onclick="javascript:event.target.port=8082" target="_blank" class="btn btn-info btn-sm">Database Editor</a>
-								<a type="button" href="/" onclick="javascript:event.target.port=8083" target="_blank" class="btn btn-info btn-sm">Email Inbox</a>
+                            <a type="button" href="/" onclick="javascript:event.target.port=8082" target="_blank" class="btn btn-info btn-sm">Редактор базы данных</a>
+                            <a type="button" href="/" onclick="javascript:event.target.port=8083" target="_blank" class="btn btn-info btn-sm">Почтовый ящик</a>
 							</div>
 						{% endif %}
 					</div>
@@ -541,12 +537,11 @@ ignoreURLs: ['searchUser.php'] // Ignore user searches
 				<!-- /.content-wrapper -->
 				<footer class="main-footer" id="main-footer">
 					<div class="float-right d-none d-sm-block">
-						<a href="https://github.com/adam-rms/adam-rms/releases" target="_blank">{{ VERSION }}</a>
+                    <a href="https://github.com/adam-rms/adam-rms/releases" target="_blank">{{ VERSION }}</a>
 					</div>
-					<strong>&copy;2018-{{ "now"|date("Y") }}
-						<a href="https://bithell.studio">Bithell Studios Ltd</a>.</strong>
-					All rights
-															        reserved.
+                    <strong>&copy;2018-{{ "now"|date("Y") }}
+                        <a href="https://bithell.studio">Bithell Studios Ltd</a>.</strong>
+                    Все права защищены.
 				</footer>
 			</div>
 			<script>
@@ -613,7 +608,7 @@ location.reload();
 });
 });{% endif %}
 });
-console.log("Welcome to    {{ CONFIG.PROJECT_NAME|escape("js") }}version    {{ VERSION|escape("js") }}");
+console.log("Добро пожаловать в {{ CONFIG.PROJECT_NAME|escape("js") }} версия {{ VERSION|escape("js") }}");
 			</script>
 			{{ CONFIG.FOOTER_ANALYTICS|raw }}
 		</body>

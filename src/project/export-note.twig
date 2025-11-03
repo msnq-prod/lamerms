@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 	<head>
 		<style>
 			body {
@@ -35,6 +35,6 @@ window.print();
 		</div>
 		{{ note.projectsNotes_text|raw }}
 		<hr/>
-		<p>Exported {{ "now"|date("j M Y h:i:sa") }} from {{ CONFIG.PROJECT_NAME }}</p>
+		<p>Экспортировано {{ "now"|date("d.m.Y H:i") }} из {{ CONFIG.PROJECT_NAME }}</p>
 	</body>
 </html>

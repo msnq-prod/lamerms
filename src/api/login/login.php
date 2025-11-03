@@ -42,11 +42,13 @@ if (isset($_POST['formInput']) and isset($_POST['password'])) {
                 $token = $GLOBALS['AUTH']->generateToken($user['users_userid'], false, "App OAuth", "app-v1");
                 $jwt = $GLOBALS['AUTH']->issueJWT($token, $user['users_userid'], "app-v1");
                 finish(true,null,["redirect" => $_SESSION['app-oauth'] . "oauth_callback?token=" . $jwt]);
-            } else {
-                $GLOBALS['AUTH']->generateToken($user['users_userid'], false, "Web", "web-session");
-                finish(true,null,["redirect" => (isset($_SESSION['return']) ? $_SESSION['return'] : $CONFIG['ROOTURL'])]);
-            }
-        }
+			} else {
+				$GLOBALS['AUTH']->generateToken($user['users_userid'], false, "Web", "web-session");
+				$redirectUrl = (isset($_SESSION['return']) && $_SESSION['return']) ? $_SESSION['return'] : $CONFIG['ROOTURL'];
+				$_SESSION['return'] = null;
+				finish(true,null,["redirect" => $redirectUrl]);
+			}
+		}
 	}
 } else finish(false, ["code" => null, "message" => "Unknown error"]);
 

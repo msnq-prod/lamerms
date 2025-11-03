@@ -8,31 +8,31 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         {% if search|length > 0 %}
-                            Search results for clients matching <b>{{ search }}</b>
+                            Результаты поиска клиентов по запросу <b>{{ search }}</b>
                         {% else %}
-                            Clients
+                            Клиенты
                         {% endif %}
                     </h3>
                     <div class="card-tools pull-right">
                         <form class="input-group input-group-sm" method="GET">
                             <div class="input-group-prepend">
                                 {% if includeFuture %}
-                                    <a href="?" type="button" class="btn btn-default">Hide future projects</a>
+                                    <a href="?" type="button" class="btn btn-default">Скрыть будущие проекты</a>
                                 {% else %}
-                                    <a href="?future" type="button" class="btn btn-default">Include future projects</a>
+                                    <a href="?future" type="button" class="btn btn-default">Показать будущие проекты</a>
                                 {% endif %}
                                 {% if includeReleased %}
-                                    <a href="?" type="button" class="btn btn-default">Hide projects where assets are released</a>
+                                    <a href="?" type="button" class="btn btn-default">Скрыть проекты с выданным оборудованием</a>
                                 {% else %}
-                                    <a href="?released" type="button" class="btn btn-default">Include projects where assets are released</a>
+                                    <a href="?released" type="button" class="btn btn-default">Показать проекты с выданным оборудованием</a>
                                 {% endif %}
                                 {% if showArchived %}
-                                    <a href="?" type="button" class="btn btn-default">Show active Clients</a>
+                                    <a href="?" type="button" class="btn btn-default">Показать активных клиентов</a>
                                 {% else %}
-                                    <a href="?archive" type="button" class="btn btn-default">Show archived Clients</a>
+                                    <a href="?archive" type="button" class="btn btn-default">Показать архивных клиентов</a>
                                 {% endif %}
                             </div>
-                            <input type="text" name="q" class="form-control" placeholder="Search" value="{{ search }}" />
+                            <input type="text" name="q" class="form-control" placeholder="Поиск" value="{{ search }}" />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 {% if "CLIENTS:CREATE"|instancePermissions %}
@@ -48,14 +48,14 @@
                         <table class="table table-head-fixed table-striped" border="0" style="overflow-x: scroll;">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Phone</th>
+                                    <th>Название</th>
+                                    <th>Адрес</th>
+                                    <th>Телефон</th>
                                     <th>Email</th>
-                                    <th>Website</th>
-                                    <th>Notes</th>
-                                    <th>Total Paid</th>
-                                    <th>To Pay</th>
+                                    <th>Сайт</th>
+                                    <th>Заметки</th>
+                                    <th>Оплачено</th>
+                                    <th>К оплате</th>
                                     {% if "CLIENTS:EDIT"|instancePermissions %}<th></th>{% endif %}
                                 </tr>
                             </thead>
@@ -187,7 +187,7 @@
                 $("#loadingoverlay").hide();
                 {% if "CLIENTS:CREATE"|instancePermissions %}
                 $("#newClientButton").click(function () {
-                    bootbox.prompt("Enter Client Name", function (result) {
+                    bootbox.prompt("Введите имя клиента", function (result) {
                         if (result) {
                             ajaxcall("clients/new.php", {"clients_name": result}, function (data) {
                                 location.reload();
@@ -206,15 +206,15 @@
                 $(".archiveButton").click(function () {
                 var id = $(this).data("id");
                 bootbox.confirm({
-                    title: "Are you sure you want to archive this client?",
-                    message: "This will not delete the client, but will prevent it from being used in new projects.",
+                    title: "Архивировать этого клиента?",
+                    message: "Клиент не будет удален, но его нельзя будет выбирать в новых проектах.",
                     buttons: {
                         confirm: {
-                            label: 'Yes',
+                            label: 'Да',
                             className: 'btn-danger'
                         },
                         cancel: {
-                            label: 'No',
+                            label: 'Нет',
                             className: 'btn-success'
                         }
                     },
@@ -230,14 +230,14 @@
             $(".unarchiveButton").click(function () {
                 var id = $(this).data("id");
                 bootbox.confirm({
-                    message: "Are you sure you want to restore this client?",
+                    message: "Восстановить этого клиента?",
                     buttons: {
                         confirm: {
-                            label: 'Yes',
+                            label: 'Да',
                             className: 'btn-danger'
                         },
                         cancel: {
-                            label: 'No',
+                            label: 'Нет',
                             className: 'btn-success'
                         }
                     },

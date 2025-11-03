@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">User Management</h2>
+                    <h2 class="card-title">Управление пользователями</h2>
                 </div>
             </div>
         </div>
@@ -15,13 +15,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Users</h3>
+                    <h3>Пользователи</h3>
                     <p>&nbsp;</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/users.php" class="small-box-footer">Manage Users <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/users.php" class="small-box-footer">Управлять пользователями <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}
@@ -29,13 +29,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Permissions</h3>
-                    <p>Configures which users can access features.</p>
+                    <h3>Права доступа</h3>
+                    <p>Настройка доступа пользователей к функциям.</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-unlock-alt"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/permissions.php" class="small-box-footer">Manage Permissions <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/permissions.php" class="small-box-footer">Управлять правами доступа <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}
@@ -43,13 +43,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Signup Codes</h3>
-                    <p>Allows new users to join your businesses if they enter a code.</p>
+                    <h3>Коды приглашения</h3>
+                    <p>Позволяют новым пользователям присоединяться к вашей организации по коду.</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-key"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/signupCodes.php" class="small-box-footer">Manage Signup Codes <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/signupCodes.php" class="small-box-footer">Управлять кодами приглашения <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}
@@ -57,13 +57,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Trusted Domains</h3>
-                    <p>Allows new users with verified email addresses to join your businesses if their email matches a domain you configure.</p>
+                    <h3>Доверенные домены</h3>
+                    <p>Позволяет новым пользователям с подтвержденным email присоединяться, если домен их почты совпадает с разрешённым.</p>
                 </div>
                 <div class="icon">
                     <i class="far fa-building"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/trustedDomains.php" class="small-box-footer">Manage Trusted Domains <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/trustedDomains.php" class="small-box-footer">Управлять доверенными доменами <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}
@@ -71,39 +71,39 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Business Settings</h2>
+                    <h2 class="card-title">Настройки организации</h2>
                 </div>
             </div>
         </div>
          <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Billing</h3>
+                    <h3>Биллинг</h3>
                     <p>&nbsp;</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-money-check"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/billing.php" class="small-box-footer">Manage Billing <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/billing.php" class="small-box-footer">Управлять биллингом <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Basic Settings</h3>
+                    <h3>Базовые настройки</h3>
                     <p>&nbsp;</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-cog"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/settings.php" class="small-box-footer">Manage Basic Settings <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/settings.php" class="small-box-footer">Управлять базовыми настройками <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% if CONFIG.FILES_ENABLED == "Enabled" and USERDATA.instance.instances_storageEnabled == 1 %}        
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Logo</h3>
+                    <h3>Логотип</h3>
                     <p>Configure the logo and email branding.</p>
                 </div>
                 <div class="icon">
@@ -220,7 +220,7 @@
                 <div class="icon">
                    
                 </div>  
-                <a href="{{ CONFIG.ROOTURL }}/instances/customCategories.php" class="small-box-footer">Manage Custom Categories <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/customCategories.php" class="small-box-footer">Управлять пользовательскими категориями <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}
@@ -228,13 +228,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>Barcodes</h3>
-                    <p>Configure barcode exports.</p>
+                    <h3>Штрихкоды</h3>
+                    <p>Настройка экспорта штрихкодов.</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-barcode"></i>
                 </div>
-                <a href="{{ CONFIG.ROOTURL }}/instances/configuration/barcodes.php" class="small-box-footer">Manage Barcodes <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ CONFIG.ROOTURL }}/instances/configuration/barcodes.php" class="small-box-footer">Управлять штрихкодами <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         {% endif %}

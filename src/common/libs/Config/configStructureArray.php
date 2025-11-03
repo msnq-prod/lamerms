@@ -826,7 +826,7 @@ $configStructureArray = [
     ],
     "specialRequest" => false,
     "default" => "Enabled",
-    "envFallback" => false,
+    "envFallback" => "CONFIG_NEW_INSTANCE_ENABLED",
   ],
   "NEW_INSTANCE_SUSPENDED" => [
     "form" => [
@@ -1016,6 +1016,6 @@ $configStructureArray = [
     ],
     "specialRequest" => false, // Has to be false as it's generated, otherwise it wont generate
     "default" => false,
-    "envFallback" => false,
+    "envFallback" => "CONFIG_TELEMETRY_NANOID",
   ],
 ];

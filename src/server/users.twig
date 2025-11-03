@@ -10,12 +10,12 @@
 	<div class="row">
 		<div class="col-lg-6 offset-lg-3 col-md-12">
 			<div class="alert alert-warning alert-dismissible">
-				<h5><i class="icon fas fa-info"></i> Server-Wide Configuration</h5>
-				You are modifying settings and configuration that affect the whole of the {{ CONFIG.PROJECT_NAME }} Server, including all businesses (instances) running on it. Please be careful when making changes here.
+				<h5><i class="icon fas fa-info"></i> Глобальные настройки сервера</h5>
+				Вы изменяете параметры, влияющие на весь сервер {{ CONFIG.PROJECT_NAME }}, включая все организации (инстансы). Будьте осторожны при изменениях.
 			</div>
             <div class="alert alert-warning alert-dismissible" style="border: 0px; margin-bottom: 15px;">
-                <h4><i class="fa fa-exclamation"></i> You have permission to view E-Mail addresses in this list</h4>
-                Please use caution and do not divulge these email addresses as per appropriate privacy policies
+                <h4><i class="fa fa-exclamation"></i> У вас есть доступ к адресам E‑mail в этом списке</h4>
+                Пожалуйста, соблюдайте политику конфиденциальности и не разглашайте эти адреса.
             </div>
 		</div>
 	</div>
@@ -25,9 +25,9 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         {% if search|length > 0 %}
-                            Search results for users matching <b>{{ search }}</b>
+                            Результаты поиска пользователей по запросу <b>{{ search }}</b>
                         {% else %}
-                            Users
+                            Пользователи
                         {% endif %}
                     </h3>
                     <div class="card-tools pull-right">
@@ -44,15 +44,15 @@
                         <table class="table table-head-fixed" id="userTable" border="0" style="overflow-x: scroll;">
                             <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Firstname</th>
-                                <th data-searchable="false">Lastname</th>
+                                <th>Логин</th>
+                                <th>Имя</th>
+                                <th data-searchable="false">Фамилия</th>
                                 <th>Email</th>
-                                <th data-orderable="false">Roles</th>
-                                <th data-orderable="false">Instances</th>
-                                <th data-searchable="false">Accepted TOS</th>
-                                <th data-searchable="false">Last Login</th>
-                                <th data-searchable="false">Last Page View</th>
+                                <th data-orderable="false">Роли</th>
+                                <th data-orderable="false">Инстансы</th>
+                                <th data-searchable="false">Принял условия</th>
+                                <th data-searchable="false">Последний вход</th>
+                                <th data-searchable="false">Последний просмотр</th>
                                 <th data-orderable="false"></th>
                             </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                     <td>{{ user["users_email"] }} {{ user["users_emailVerified"] == 1 ? '<i class="fa fa-check-square-o">' : null }}</td>
                                     <td>
                                         {% if user.users_suspended == '1' %}
-                                            <span class="badge bg-danger">Suspended</span><br/>
+                                            <span class="badge bg-danger">Заблокирован</span><br/>
                                         {% endif %}
                                         {% if user.currentPositions|length > 0 %}
                                             {% for position in user.currentPositions %}
@@ -251,7 +251,7 @@
                             if (result == '1') {
                                 $("#loadingoverlay").hide();
                             } else {
-                                bootbox.alert("Sorry - Operation could not be completed! Please reload the page")
+                                bootbox.alert("Операция не выполнена. Обновите страницу.")
                             }
                         }
                     });
@@ -264,11 +264,11 @@
                         url: "{{ CONFIG.ROOTURL }}/api/account/suspend.php?userid=" + $(this).data("userid") + '&suspendval=' + $(this).data("suspendval"),
                         success: function (result) {
                             if (result == '1') {
-                                bootbox.alert("Success", function () {
+                                bootbox.alert("Успешно", function () {
                                     location.reload();
                                 });
                             } else {
-                                bootbox.alert("Sorry - Operation could not be completed! Please reload the page", function () {
+                                bootbox.alert("Операция не выполнена. Обновите страницу.", function () {
                                     location.reload();
                                 });
                             }
@@ -280,14 +280,14 @@
                 $(".deleteuser").click(function () {
                     var userid = $(this).data("userid");
                     bootbox.confirm({
-                        message: "Are you sure you wish to delete this user?",
+                        message: "Удалить пользователя?",
                         buttons: {
                             confirm: {
-                                label: 'Yes',
+                                label: 'Да',
                                 className: 'btn-danger'
                             },
                             cancel: {
-                                label: 'No',
+                                label: 'Нет',
                                 className: 'btn-success'
                             }
                         },

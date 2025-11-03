@@ -6,22 +6,18 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    Welcome to {{ CONFIG.PROJECT_NAME }}
+                    Добро пожаловать в {{ CONFIG.PROJECT_NAME }}
                 </h3>
             </div>
             <div class="card-body">
-                <p>AdamRMS is a free, open source advanced Rental Management System for Theatre, AV & Broadcast</p>
-                <a href="https://adam-rms.com/" class="btn btn-default" target="_blank">Learn More</a>
+                <p>AdamRMS — бесплатная система управления арендой для театра, AV и вещания с открытым исходным кодом</p>
+                <a href="https://adam-rms.com/" class="btn btn-default" target="_blank">Подробнее</a>
                 <hr />
-                <p>{{ CONFIG.PROJECT_NAME }} has separate areas for separate businesses, and is designed to be used by multiple businesses all with one account (that you're logged into now). To get started, you need to join a business {% if CONFIG["NEW_INSTANCE_ENABLED"] == "Enabled" or "INSTANCES:CREATE"|serverPermissions %}or create one{% endif %}</p>
+                <p>В {{ CONFIG.PROJECT_NAME }} у каждой организации своя область. Сервис рассчитан на использование несколькими организациями с одной учетной записью (в которую вы сейчас вошли). Чтобы начать, присоединитесь к организации.</p>
             </div>
         </div>
         {% include 'assets/templates/joinInstance.twig' %}
     </div>
-    {% if CONFIG["NEW_INSTANCE_ENABLED"] == "Enabled" or "INSTANCES:CREATE"|serverPermissions %}
-    <div class="col-lg-4 col-md-6 col-sm-12">      
-        {% include 'assets/templates/newInstance.twig' %}
-    </div>
-    {% endif %}
+    {# Company creation disabled and moved to legacy #}
 </div>
 {% endblock %}

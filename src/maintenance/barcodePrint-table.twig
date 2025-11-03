@@ -3,26 +3,26 @@
         <table border="1">
             <tr>
                 <th>
-                    Asset ID
+                    ID объекта
                 </th>
                 <th>
-                    Asset Type
+                    Тип объекта
                 </th>
                 <th>
-                    Barcode
+                    Штрихкод
                 </th>
                 <th>
-                    Barcode Type
+                    Тип штрихкода
                 </th>   
             </tr>
 
         {% for i in range(0,(assets|length - 1)) %}
             <tr>
                 <td>
-                    {{ assets[i].isAsset ? assets[i].assets_tag : '<i>Not yet associated with asset</i>' }}
+                    {{ assets[i].isAsset ? assets[i].assets_tag : '<i>Еще не привязан к объекту</i>' }}
                 </td>
                 <td>
-                     {{ assets[i].isAsset ? assets[i].assetTypes_name : '<i>Not yet associated with asset</i>' }}
+                     {{ assets[i].isAsset ? assets[i].assetTypes_name : '<i>Еще не привязан к объекту</i>' }}
                 </td>
                 <td>
                     {{ assets[i].barcode.assetsBarcodes_value }}

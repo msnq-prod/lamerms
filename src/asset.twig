@@ -21,13 +21,13 @@
                         <h3 class="profile-username text-center">{{ assets[0].assets_tag|aTag }}</h3>
                         {% if assets[0].assets_endDate is not null and assets[0].assets_endDate|date("U") <= "now"|date("U")  %}
                             <div class="alert alert-danger">
-                                <h5> <i class="fas fa-archive"></i> Asset Archived</h5>
-                                Asset was {{ assets[0].assets_archived }} on {{ assets[0].assets_endDate|date("d/M/Y") }}
+                                <h5> <i class="fas fa-archive"></i> Объект архивирован</h5>
+                                Объект был {{ assets[0].assets_archived }} {{ assets[0].assets_endDate|date("d/M/Y") }}
                             </div>
                         {% endif %}
                         {% if assets[0]['link'] %}
                             <div class="callout callout-success">
-                                Asset is linked to asset <a href="{{ CONFIG.ROOTURL }}/asset.php?id={{ assets[0]['link']['assetTypes_id'] }}&instance={{ASSET_INSTANCE.instances_id}}&asset={{ assets[0]['link']['assets_id'] }}">{{ assets[0]['link']['assets_tag']|aTag }} ({{ assets[0]['link']['assetTypes_name'] }})</a>
+                                Объект связан с объектом <a href="{{ CONFIG.ROOTURL }}/asset.php?id={{ assets[0]['link']['assetTypes_id'] }}&instance={{ASSET_INSTANCE.instances_id}}&asset={{ assets[0]['link']['assets_id'] }}">{{ assets[0]['link']['assets_tag']|aTag }} ({{ assets[0]['link']['assetTypes_name'] }})</a>
                             </div>
                         {% endif %}
                         {% if assets[0]['assets_notes']|length > 0 %}
@@ -44,20 +44,20 @@
                                 {% endif %}
                             {% endfor %}
                             <li class="list-group-item">
-                                <b>Mass</b> <span class="float-right text-primary">{{ (assets[0]['assets_mass'] ? assets[0]['assets_mass']|mass : (asset.assetTypes_mass != "" and asset.assetTypes_mass != 0 ? asset.assetTypes_mass|mass : '?')) }}</span>
+                                <b>Масса</b> <span class="float-right text-primary">{{ (assets[0]['assets_mass'] ? assets[0]['assets_mass']|mass : (asset.assetTypes_mass != "" and asset.assetTypes_mass != 0 ? asset.assetTypes_mass|mass : '?')) }}</span>
                             </li>
                             <li class="list-group-item">
-                                <b>Value</b> <span class="float-right text-primary">{{ (assets[0]['assets_value'] ?: asset.assetTypes_value)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                                <b>Стоимость</b> <span class="float-right text-primary">{{ (assets[0]['assets_value'] ?: asset.assetTypes_value)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                             </li>
                             <li class="list-group-item">
-                                <b>Day Rate</b> <span class="float-right text-primary">{{ (assets[0]['assets_dayRate'] ?: asset.assetTypes_dayRate)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                                <b>Ставка/день</b> <span class="float-right text-primary">{{ (assets[0]['assets_dayRate'] ?: asset.assetTypes_dayRate)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                             </li>
                             <li class="list-group-item">
-                                <b>Week Rate</b> <span class="float-right text-primary">{{ (assets[0]['assets_weekRate'] ?: asset.assetTypes_weekRate)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                                <b>Ставка/неделя</b> <span class="float-right text-primary">{{ (assets[0]['assets_weekRate'] ?: asset.assetTypes_weekRate)|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                             </li>
                             {% if assets[0]['storage_location'] %}
                             <li class="list-group-item">
-                                <b>Storage Location</b>
+                                <b>Место хранения</b>
                                 {% if "LOCATIONS:VIEW"|instancePermissions %}
                                     <a class="float-right" href="{{ CONFIG.ROOTURL }}/location/">{{assets[0]['storage_location'][0]['locations_name']}}</a>
                                 {% else %}
@@ -67,10 +67,10 @@
                             {% endif %}
                         </ul>
                         {% if "ASSETS:ARCHIVE"|instancePermissions and (assets[0].assets_endDate is null or assets[0].assets_endDate|date("U") > "now"|date("U"))  and ASSET_INSTANCE.instances_id == USERDATA.instance.instances_id  %}
-                        <button class="btn btn-warning btn-block archiveAssetButton" data-assetid="{{ assets[0]['assets_id'] }}" style="margin-bottom: 10px;">Archive</button>
+                        <button class="btn btn-warning btn-block archiveAssetButton" data-assetid="{{ assets[0]['assets_id'] }}" style="margin-bottom: 10px;">Архивировать</button>
                         {% endif %}
                         {% if "ASSETS:DELETE"|instancePermissions and ASSET_INSTANCE.instances_id == USERDATA.instance.instances_id  %}
-                        <button class="btn btn-danger btn-block deleteAssetButton" data-assetid="{{ assets[0]['assets_id'] }}" style="margin-bottom: 10px;">Delete</button>
+                        <button class="btn btn-danger btn-block deleteAssetButton" data-assetid="{{ assets[0]['assets_id'] }}" style="margin-bottom: 10px;">Удалить</button>
                         {% endif %}
                     </div>
                 </div>
@@ -94,30 +94,30 @@
                     <ul class="list-group list-group-unbordered mb-3">
                         {% if asset.assetTypes_productLink != null %}
                         <li class="list-group-item">
-                            <b>Product Web Link</b> <a class="float-right" href="{{ asset.assetTypes_productLink }}" target="_blank">{{ asset.assetTypes_productLink|length > 25 ? asset.assetTypes_productLink|slice(0, 25) ~ '...': asset.assetTypes_productLink  }}</a>
+                            <b>Ссылка на продукт</b> <a class="float-right" href="{{ asset.assetTypes_productLink }}" target="_blank">{{ asset.assetTypes_productLink|length > 25 ? asset.assetTypes_productLink|slice(0, 25) ~ '...': asset.assetTypes_productLink  }}</a>
                         </li>
                         {% endif %}
                         <li class="list-group-item">
-                            <b>Category</b> {{ asset.assetCategoriesGroups_name }} - {{ asset.assetCategories_name }}
+                            <b>Категория</b> {{ asset.assetCategoriesGroups_name }} - {{ asset.assetCategories_name }}
                         </li>
                         <li class="list-group-item">
-                            <b>Manufacturer</b> {{ asset.manufacturers_name }}
+                            <b>Производитель</b> {{ asset.manufacturers_name }}
                         </li>
                         <li class="list-group-item">
-                            <b>Mass</b> <span class="float-right text-primary">{{asset.assetTypes_mass != "" and asset.assetTypes_mass != 0 ? asset.assetTypes_mass|mass : "?" }}</span>
+                            <b>Масса</b> <span class="float-right text-primary">{{asset.assetTypes_mass != "" and asset.assetTypes_mass != 0 ? asset.assetTypes_mass|mass : "?" }}</span>
                         </li>
                         <li class="list-group-item">
-                            <b>Value</b> <span class="float-right text-primary">{{ asset.assetTypes_value|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                            <b>Стоимость</b> <span class="float-right text-primary">{{ asset.assetTypes_value|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                         </li>
                         <li class="list-group-item">
-                            <b>Day Rate</b> <span class="float-right text-primary">{{ asset.assetTypes_dayRate|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                            <b>Ставка/день</b> <span class="float-right text-primary">{{ asset.assetTypes_dayRate|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                         </li>
                         <li class="list-group-item">
-                            <b>Week Rate</b> <span class="float-right text-primary">{{ asset.assetTypes_weekRate|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
+                            <b>Ставка/неделя</b> <span class="float-right text-primary">{{ asset.assetTypes_weekRate|money(ASSET_INSTANCE['instances_config_currency']) }}</span>
                         </li>
                     </ul>
-                    {% if asset.oneasset %}
-                        <a href="?id={{asset.assetTypes_id}}" class="btn btn-info btn-block"><b>View All</b></a>
+                        {% if asset.oneasset %}
+                        <a href="?id={{asset.assetTypes_id}}" class="btn btn-info btn-block"><b>Показать все</b></a>
                     {% endif %}
                     
                 </div>
@@ -128,7 +128,7 @@
         <div class="col-md-9">
             {% if ASSET_INSTANCE.instances_id != USERDATA.instance.instances_id %}
                 <div class="alert alert-info">
-                    <h5>Showing assets from business {{ ASSET_INSTANCE.instances_name }}</h5>
+                    <h5>Показываются объекты организации {{ ASSET_INSTANCE.instances_name }}</h5>
                 </div>
             {% endif %}
             {% if assets|length == 1 %}
@@ -149,14 +149,14 @@
                 {% if assets[0]['linkedToThis'] %}
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Assets linked to this asset</h3>
+                            <h3 class="card-title">Объекты, связанные с этим объектом</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-sm">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Название</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -187,11 +187,11 @@
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link active" href="#calendarBoxAsset" data-toggle="tab"><i class="far fa-calendar-alt"></i></a></li>
-                        {% if "ASSETS:EDIT"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#editAsset" data-toggle="tab">Edit {{ assets[0].assets_tag|aTag }}</a></li>{% endif %}
-                        {% if CONFIG.FILES_ENABLED == "Enabled" and USERDATA.instance.instances_storageEnabled == 1 and "ASSETS:ASSET_FILE_ATTACHMENTS:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#files" data-toggle="tab">Asset Files</a></li>{% endif %}
-                        <li class="nav-item"><a class="nav-link" href="#location" data-toggle="tab">Location</a></li>
-                        {% if "ASSETS:ASSET_BARCODES:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#barcodes" data-toggle="tab">Barcodes</a></li>{% endif %}
-                        {% if  "MAINTENANCE_JOBS:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#maintenance" data-toggle="tab">Maintenance</a></li>{% endif %}
+                        {% if "ASSETS:EDIT"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#editAsset" data-toggle="tab">Редактировать {{ assets[0].assets_tag|aTag }}</a></li>{% endif %}
+                        {% if CONFIG.FILES_ENABLED == "Enabled" and USERDATA.instance.instances_storageEnabled == 1 and "ASSETS:ASSET_FILE_ATTACHMENTS:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#files" data-toggle="tab">Файлы объекта</a></li>{% endif %}
+                        <li class="nav-item"><a class="nav-link" href="#location" data-toggle="tab">Местоположение</a></li>
+                        {% if "ASSETS:ASSET_BARCODES:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#barcodes" data-toggle="tab">Штрихкоды</a></li>{% endif %}
+                        {% if  "MAINTENANCE_JOBS:VIEW"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#maintenance" data-toggle="tab">Обслуживание</a></li>{% endif %}
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body" style="padding: 0;">
@@ -212,11 +212,11 @@
                                     var calendar = new Calendar(calendarEl, {
                                         themeSystem: 'bootstrap',
                                         buttonText:  {
-                                            today:    'Today',
-                                            month:    'Month',
-                                            week:     'Week',
-                                            day:      'Day',
-                                            list:     'List'
+                                            today:    'Сегодня',
+                                            month:    'Месяц',
+                                            week:     'Неделя',
+                                            day:      'День',
+                                            list:     'Список'
                                         },
                                         headerToolbar : {
                                             left  : 'prev,next today',
@@ -265,13 +265,13 @@
                                 <div class="card" style="margin-bottom:0;">
                                     <div class="card-header p-2">
                                         <ul class="nav nav-pills">
-                                            <li class="nav-item"><a class="nav-link active" href="#editAssetDetails" data-toggle="tab">Details</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#linked" data-toggle="tab">Asset Link</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#groups" data-toggle="tab">Groups</a></li>
-                                            {% if assetFieldsLength > 0 %}<li class="nav-item"><a class="nav-link" href="#editAssetFields" data-toggle="tab">Custom Fields</a></li>{% endif %}
-                                            {% if "ASSETS:EDIT:OVVERRIDES"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#editAssetDetailsOverrides" data-toggle="tab">Asset Type Overrides</a></li>{% endif %}
-                                            <li class="nav-item"><a class="nav-link" href="#editAssetType" data-toggle="tab">Change Type</a></li>
-                                            {% if "ASSETS:TRANSFER"|instancePermissions and assets[0].assets_endDate is null %}<li class="nav-item"><a class="nav-link" href="#moveAsset" data-toggle="tab">Transfer Asset</a></li>{% endif %}
+                                            <li class="nav-item"><a class="nav-link active" href="#editAssetDetails" data-toggle="tab">Детали</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#linked" data-toggle="tab">Связь объектов</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#groups" data-toggle="tab">Группы</a></li>
+                                            {% if assetFieldsLength > 0 %}<li class="nav-item"><a class="nav-link" href="#editAssetFields" data-toggle="tab">Пользовательские поля</a></li>{% endif %}
+                                            {% if "ASSETS:EDIT:OVVERRIDES"|instancePermissions %}<li class="nav-item"><a class="nav-link" href="#editAssetDetailsOverrides" data-toggle="tab">Переопределения типа</a></li>{% endif %}
+                                            <li class="nav-item"><a class="nav-link" href="#editAssetType" data-toggle="tab">Сменить тип</a></li>
+                                            {% if "ASSETS:TRANSFER"|instancePermissions and assets[0].assets_endDate is null %}<li class="nav-item"><a class="nav-link" href="#moveAsset" data-toggle="tab">Переместить объект</a></li>{% endif %}
                                         </ul>
                                     </div><!-- /.card-header -->
                                     <div class="card-body" style="padding: 0;">
@@ -279,41 +279,41 @@
                                             <div class="active tab-pane" style="padding: 1.25rem" id="editAssetDetails">
                                                 <form id="editAssetDetailsForm">
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Asset ID</span></div>
+                                                        <div class="input-group-prepend"><span class="input-group-text">ID объекта</span></div>
                                                         <input class="form-control" name="assets_tag" value="{{ assets[0]['assets_tag'] }}" />
                                                     </div>
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend"><span class="input-group-text">Asset Notes</span></div>
+                                                        <div class="input-group-prepend"><span class="input-group-text">Заметки об объекте</span></div>
                                                         <textarea class="form-control" rows="2" name="assets_notes" placeholder="">{{ assets[0]['assets_notes'] }}</textarea>
                                                     </div>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Storage Location</span>
+                                                            <span class="input-group-text">Место хранения</span>
                                                         </div>
                                                         <select class="form-control select2bs4" name="assets_storageLocation" id="editAssetStoredLocation">
                                                             {% if assets[0]['storage_location'] == [] %}
-                                                                <option value="" disabled selected>No Location Selected....</option>
+                                                                <option value="" disabled selected>Местоположение не выбрано…</option>
                                                             {% endif %}
                                                             {% for location in locations %}
-                                                                <option value="{{ location.locations_id }}" {{ assets[0]['storage_location'][0]['locations_id'] == location.locations_id ? 'selected' }} {{ location.locations_archived == 1 ? 'disabled' }}>{{ location.locations_archived == 1 ? '[Archived] ' }}{{ location.locations_name }}</option>
+                                                                <option value="{{ location.locations_id }}" {{ assets[0]['storage_location'][0]['locations_id'] == location.locations_id ? 'selected' }} {{ location.locations_archived == 1 ? 'disabled' }}>{{ location.locations_archived == 1 ? '[Архивировано] ' }}{{ location.locations_name }}</option>
                                                                 {% for subLocation in location.linkedToThis %}
                                                                     <option value="{{ subLocation.locations_id }}" {{ assets[0]['storage_location'][0]['locations_id'] == subLocation.locations_id ? 'selected' }}  {{ subLocation.locations_archived == 1 ? 'disabled' }} title="{% for i in range(1, subLocation['tier']) %}{% if loop.last %}&#8627;{% else %}&nbsp;&nbsp;{% endif %}{% endfor %}">
-                                                                        {{ subLocation.locations_archived == 1 ? '[Archived] ' }}{{ subLocation.locations_name }}
+                                                                        {{ subLocation.locations_archived == 1 ? '[Архивировано] ' }}{{ subLocation.locations_name }}
                                                                     </option>
                                                                 {% endfor %}
                                                             {% endfor %}
                                                         </select>
                                                     </div>
                                                 </form>
-                                                <button class="btn btn-default float-right" id="saveAssetSettingsButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="saveAssetSettingsButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                             </div>
                                             <div class="tab-pane" style="padding: 1.25rem" id="linked">
-                                                <div class="callout">
-                                                    Linking this asset to another means that whenever that asset is added to a project this asset is also added. For example, you might link an assets power supply to the asset
+                                                    <div class="callout">
+                                                    Связав этот объект с другим, вы обеспечите автоматическое добавление текущего объекта в проект при добавлении связанного. Например, можно привязать блок питания к основному прибору.
                                                 </div>
                                                 {% if USERDATA.instance.instances_config_linkedDefaultDiscount > 0 %}
                                                     <div class="callout callout-danger">
-                                                        When linked assets are added to a project they are discounted by {{ USERDATA.instance.instances_config_linkedDefaultDiscount }}% by default
+                                                        При добавлении связанных объектов в проект им по умолчанию применяется скидка {{ USERDATA.instance.instances_config_linkedDefaultDiscount }}%
                                                     </div>
                                                 {% endif %}
                                                 <select class="form-control select2bs4 assetSelect2" id="assetLinkChange">
@@ -321,9 +321,9 @@
                                                         <option value="{{ assets[0]['assets_linkedTo'] }}" selected>{{ assets[0]['link']['assets_tag']|aTag }} ({{ assets[0]['link']['assetTypes_name'] }})</option>
                                                     {% endif %}
                                                 </select>
-                                                <button class="btn btn-default float-right" id="saveAssetLinkChangeButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="saveAssetLinkChangeButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                                 {% if assets[0]['assets_linkedTo'] %}
-                                                    <button class="btn btn-warning float-right" id="removeAssetLinkChangeButton" style="margin-top:10px;margin-bottom:10px;">Remove Link</button>
+                                                    <button class="btn btn-warning float-right" id="removeAssetLinkChangeButton" style="margin-top:10px;margin-bottom:10px;">Удалить связь</button>
                                                 {% endif %}
 
                                             </div>
@@ -345,7 +345,7 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                 </form>
-                                                <button class="btn btn-default float-right" id="saveAssetDefinableFieldButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="saveAssetDefinableFieldButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                             </div>
                                             {% if "ASSETS:EDIT:OVVERRIDES"|instancePermissions %}
                                                 <div class="tab-pane" style="padding: 1.25rem" id="editAssetDetailsOverrides">
@@ -390,7 +390,7 @@
                                                             <input type="number" step="0.001" min="0" name="assets_weekRate" class="form-control" value="{{ assets[0].assets_weekRate|moneyDecimal }}" />
                                                         </div>
                                                     </form>
-                                                    <button class="btn btn-default float-right" id="editAssetDetailsOverridesButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="editAssetDetailsOverridesButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                                 </div>
                                             {% endif %}
                                             <div class="tab-pane" style="padding: 1.25rem" id="editAssetType">
@@ -398,7 +398,7 @@
                                                     Changing the asset type for this asset can have significant implications especially with cost of existing projects and definable fields
                                                 </div>
                                                 <select class="form-control  select2bs4 assetSelect2" id="assetTypeChange" placeholder="{{ asset.assetTypes_name }}" value="{{ asset.assetTypes_id }}"></select>
-                                                <button class="btn btn-default float-right" id="saveAssetTypeChangeButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="saveAssetTypeChangeButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                             </div>
                                             {% if "ASSETS:TRANSFER"|instancePermissions %}
                                             <div class="tab-pane" style="padding: 1.25rem" id="moveAsset">
@@ -466,7 +466,7 @@
                                         Location
                                     </th>
                                     <th>
-                                        Type
+                                        Тип
                                     </th>
                                     <th>
                                         User
@@ -483,7 +483,7 @@
                                             {% if scan.locations_name %}
                                                 {{ scan.locations_name }}
                                             {% elseif scan.assetTypes_name %}
-                                                Inside asset {{  scan.assetTypes_name }} ({{ scan.assets_tag }})
+                                                Внутри объекта {{  scan.assetTypes_name }} ({{ scan.assets_tag }})
                                             {% elseif scan.assetsBarcodes_customLocation %}
                                                 {{  scan.assetsBarcodes_customLocation }}
                                             {% endif %}
@@ -519,19 +519,19 @@
 
                                         </th>
                                         <th>
-                                            Barcode value
+                                            Значение штрихкода
                                         </th>
                                         <th>
-                                            Type
+                                            Тип
                                         </th>
                                         <th>
-                                            Notes
+                                            Заметки
                                         </th>
                                         <th>
-                                            Creator
+                                            Создатель
                                         </th>
                                         <th>
-                                            Last Scanned
+                                            Последнее сканирование
                                         </th>
                                         <th style="width:1%;">
 
@@ -559,7 +559,7 @@
                                                 </a>
                                                 <br/>
                                                 <small>
-                                                    Created {{barcode.assetsBarcodes_added|date("d M Y h:i:sa")}}
+                                                    Создано {{barcode.assetsBarcodes_added|date("d M Y h:i:sa")}}
                                                 </small>
                                             </td>
                                             <td>
@@ -567,12 +567,12 @@
                                                     {% if barcode.latestScan.locations_name %}
                                                         {{ barcode.latestScan.locations_name }}
                                                     {% elseif barcode.latestScan.assetTypes_name %}
-                                                        Inside asset {{  barcode.latestScan.assetTypes_name }} ({{ barcode.latestScan.assets_tag }})
+                                                        Внутри объекта {{  barcode.latestScan.assetTypes_name }} ({{ barcode.latestScan.assets_tag }})
                                                     {% elseif barcode.latestScan.assetsBarcodes_customLocation %}
                                                         {{  barcode.latestScan.assetsBarcodes_customLocation }}
                                                         <br/>
                                                         <small>
-                                                           Location was entered as text
+                                                           Местоположение введено текстом
                                                         </small>
                                                     {% endif %}
                                                     <br/>
@@ -580,12 +580,12 @@
                                                         <a href="{{ CONFIG.ROOTURL }}/user.php?id={{ barcode.latestScan.users_userid }}">{{ barcode.latestScan.users_name1 ~ " " ~ barcode.latestScan.users_name2 }}</a> {{ barcode.latestScan.assetsBarcodesScans_timestamp|date("d/M/Y G:i:s") }}
                                                     </small>
                                                 {% else %}
-                                                    <i>Never scanned</i>
+                                                    <i>Никогда не сканировался</i>
                                                 {% endif %}
                                             </td>
                                             <td>
                                                 {% if "ASSETS:ASSET_BARCODES:DELETE"|instancePermissions %}
-                                                    <button title="Delete" class="btn btn-sm btn-danger deleteBarcodeButton" data-barcodeid="{{ barcode['assetsBarcodes_id'] }}"><i class="fa fa-trash"></i></button>
+                                                    <button title="Удалить" class="btn btn-sm btn-danger deleteBarcodeButton" data-barcodeid="{{ barcode['assetsBarcodes_id'] }}"><i class="fa fa-trash"></i></button>
                                                 {% endif %}
                                             </td>
                                         </tr>
@@ -648,7 +648,7 @@
                                                     </div>
                                                 </form>
 
-                                                <button class="btn btn-default float-right" id="addNewJobButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="addNewJobButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                             </div>
                                             <div class="active tab-pane" style="padding: 1.25rem" id="maintenance-flags">
                                                 {% for flag in assets[0].flagsblocks.BLOCK %}
@@ -1026,7 +1026,7 @@
                                 <div class="card-header p-2">
                                     <ul class="nav nav-pills">
                                         <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#fields" data-toggle="tab">Custom Fields</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#fields" data-toggle="tab">Пользовательские поля</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#thumbnail" data-toggle="tab">Thumbnails</a></li>
                                     </ul>
                                 </div><!-- /.card-header -->
@@ -1108,7 +1108,7 @@
                                                 {% endfor %}
                                             </select>
                                             </form>
-                                            <button class="btn btn-default float-right" id="saveSettingsButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                            <button class="btn btn-default float-right" id="saveSettingsButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                         </div>
                                         <div class="tab-pane" style="padding: 1.25rem" id="fields">
                                             <div class="callout callout-info">
@@ -1125,7 +1125,7 @@
                                             <div class="callout callout-danger">
                                                 <p>Leave a field blank to delete it</p>
                                             </div>
-                                            <button class="btn btn-default float-right" id="saveTypeDefinableFieldButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                            <button class="btn btn-default float-right" id="saveTypeDefinableFieldButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                         </div>
                                         <div class="tab-pane" style="padding: 1.25rem" id="thumbnail">
 {% if CONFIG.FILES_ENABLED == "Enabled" and USERDATA.instance.instances_storageEnabled == 1 and "ASSETS:ASSET_TYPE_FILE_ATTACHMENTS:CREATE"|instancePermissions %}
@@ -1232,7 +1232,7 @@
                                                     </div>
                                                 </form>
 
-                                                <button class="btn btn-default float-right" id="addNewJobButton" style="margin-top:10px;margin-bottom:10px;">Save</button>
+                                                <button class="btn btn-default float-right" id="addNewJobButton" style="margin-top:10px;margin-bottom:10px;">Сохранить</button>
                                             </div>
                                             <div class="active tab-pane" style="padding: 1.25rem" id="maintenance-flags">
                                                 {% for flag in assets[0].flagsblocks.BLOCK %}

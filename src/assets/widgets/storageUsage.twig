@@ -3,7 +3,7 @@
 
 <div class="card statsWidget" data-widgetname="storageUsage">
     <div class="card-header">
-        <h3 class="card-title">Storage Usage</h3>
+        <h3 class="card-title">Использование хранилища</h3>
 
         <div class="card-tools">
             {% if WIDGETS.checkUser('storageUsage') %}
@@ -24,6 +24,6 @@
             <div class="progress-bar" style="width: {{ ((THISWIDGET.USED/THISWIDGET.CAPACITY)*100)|round(1, 'ceil') }}%"></div>
         </div>
         {% endif %}
-        <span class="progress-description">{{ THISWIDGET.USED|formatsize }} of {{ (THISWIDGET.CAPACITY ? THISWIDGET.CAPACITY|formatsize : "unlimited storage") }} used</span>
+        <span class="progress-description">Использовано {{ THISWIDGET.USED|formatsize }} из {{ (THISWIDGET.CAPACITY ? THISWIDGET.CAPACITY|formatsize : "безлимитного") }}</span>
     </div>
 </div>

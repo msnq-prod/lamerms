@@ -6,25 +6,25 @@
 		<div class="card">
 			<div class="card-header">
 				<ul class="nav nav-pills">
-					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/navigation.php"><i class="fas fa-arrow-left"></i> Back to Settings</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/navigation.php"><i class="fas fa-arrow-left"></i> Назад к настройкам</span></a></li>
 					{% if "BUSINESS:USERS:VIEW:LIST"|instancePermissions %}
-					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/users.php">Users</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/users.php">Пользователи</a></li>
 					{% endif %}
 					{% if "BUSINESS:ROLES_AND_PERMISSIONS:VIEW"|instancePermissions %}
-					<li class="nav-item"><a class="nav-link active" href="{{CONFIG.ROOTURL}}/instances/permissions.php">Permissions</a></li>
+					<li class="nav-item"><a class="nav-link active" href="{{CONFIG.ROOTURL}}/instances/permissions.php">Права доступа</a></li>
 					{% endif %}
 					{% if "BUSINESS:USER_SIGNUP_CODES:VIEW"|instancePermissions %}
-					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/signupCodes.php">Signup Codes</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/signupCodes.php">Коды приглашения</a></li>
 					{% endif %}
 					{% if "BUSINESS:SETTINGS:EDIT:TRUSTED_DOMAINS"|instancePermissions %}
-					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/trustedDomains.php">Trusted Domains</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{CONFIG.ROOTURL}}/instances/trustedDomains.php">Доверенные домены</a></li>
 					{% endif %}
 				</ul>
 			</div>
 		</div>
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">Business Permissions</h3>
+				<h3 class="card-title">Права доступа организации</h3>
 				{% if "BUSINESS:ROLES_AND_PERMISSIONS:CREATE"|instancePermissions %}
 				<div class="card-tools pull-right">
 					<button type="button" class="btn btn-tool" id="addNewInstancePosition"><i class="fa fa-plus"></i>
@@ -36,11 +36,11 @@
 				<table class="table table-head-fixed" >
 					<thead>
 						<tr>
-							<th style="font-weight: normal; width:30%">Code</th>
-							<th style="font-weight: normal;">Category</th>
-							<th style="font-weight: normal;">Table</th>
-							<th style="font-weight: normal;">Type</th>
-							<th style="font-weight: normal;">Element</th>
+							<th style="font-weight: normal; width:30%">Код</th>
+							<th style="font-weight: normal;">Категория</th>
+							<th style="font-weight: normal;">Таблица</th>
+							<th style="font-weight: normal;">Тип</th>
+							<th style="font-weight: normal;">Элемент</th>
 							{% for position in positions %}
 							<th style="width: 1px;">{{position.instancePositions_displayName}}</th>
 							{% endfor %}
@@ -137,17 +137,17 @@ $(document).ready(function() {
 		let cautionText = checkbox.data("cautiontext")
 		//show a popup if this is a signup code permission
 		if (checkbox.is(":checked") && cautionText !== null && cautionText.length > 0) {
-			bootbox.confirm({
-				title: "Warning - potential privilege escalation",
-				message: cautionText + "<br /><br />This permission is normally only enabled for administrators in a business. Are you sure you want to enable it?",
-				buttons: {
-					confirm: {
-						label: 'Yes',
-					},
-					cancel: {
-						label: 'No',
-					},
-				},
+									bootbox.confirm({
+									title: "Внимание — возможное повышение привилегий",
+									message: cautionText + "<br /><br />Эта привилегия обычно доступна только администраторам. Включить?",
+									buttons: {
+										confirm: {
+											label: 'Да',
+										},
+										cancel: {
+											label: 'Нет',
+										},
+									},
 				callback: function (result) {
 					if (result){
 						updatePermission(checkbox);
